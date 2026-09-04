@@ -1,0 +1,305 @@
+{
+  "info": {
+    "_postman_id": "4e4e3b6d-4a99-45b6-8cf8-5c8d04bb4f4a",
+    "name": "Appixo Backend API",
+    "description": "Postman collection for the Appixo guest and admin APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "guestId",
+      "value": "1"
+    },
+    {
+      "key": "enquiryId",
+      "value": "1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Guest API",
+      "item": [
+        {
+          "name": "Register Guest User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('guestId', response.data.guestId);",
+                  "    pm.collectionVariables.set('enquiryId', response.data.guestId);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"fullName\": \"John Doe\",\n  \"phone\": \"+1 234 567 8900\",\n  \"company\": \"Example Company\",\n  \"location\": \"United States\",\n  \"inquiryType\": \"Support\",\n  \"projectContext\": \"Building a web application\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/guest/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guest", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get Guest Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/guest/profile/{{guestId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guest", "profile", "{{guestId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Guest Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"John Updated\",\n  \"phone\": \"+1 555 010 2020\",\n  \"company\": \"Updated Company\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/guest/profile/{{guestId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guest", "profile", "{{guestId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Guest Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/guest/all",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guest", "all"]
+            }
+          }
+        },
+        {
+          "name": "Delete Guest User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/guest/profile/{{guestId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guest", "profile", "{{guestId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin API",
+      "item": [
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                        "if (pm.response.code === 200) {",
+                        "    const response = pm.response.json();",
+                        "    pm.collectionVariables.set('token', response.data.token);",
+                        "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Admin Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get All Enquiries",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/enquiries",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "enquiries"]
+            }
+          }
+        },
+        {
+          "name": "Get Enquiry Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/enquiries/{{enquiryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "enquiries", "{{enquiryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Enquiry Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in-progress\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/enquiries/{{enquiryId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "enquiries", "{{enquiryId}}", "status"]
+            }
+          }
+        },
+        {
+          "name": "Admin Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "logout"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
