@@ -145,7 +145,7 @@ The server will run on `http://localhost:3000` by default.
 - **Method**: GET
 - **URL**: `/api/admin/enquiries/:enquiryId`
 - **Headers**: `Authorization: Bearer <your-token>`
-- **Response**: Complete enquiry details
+- **Response**: Complete enquiry details (automatically marks `isRead` to `true`)
 - **Requires**: Valid admin session
 
 #### 6. Update Enquiry Status
@@ -159,6 +159,19 @@ The server will run on `http://localhost:3000` by default.
 }
 ```
 - **Valid Statuses**: `pending`, `in-progress`, `resolved`, `closed`
+- **Requires**: Valid admin session
+
+#### 7. Update Enquiry Read Status (Mark Read/Unread)
+- **Method**: PUT
+- **URL**: `/api/admin/enquiries/:enquiryId/read`
+- **Headers**: `Authorization: Bearer <your-token>`
+- **Body**:
+```json
+{
+  "isRead": true
+}
+```
+- **Description**: Explicitly set enquiry as read (`true`) or unread (`false`).
 - **Requires**: Valid admin session
 
 ### Health Check

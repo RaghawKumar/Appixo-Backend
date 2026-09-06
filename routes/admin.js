@@ -11,5 +11,7 @@ router.get('/profile', adminController.getAdminProfile);
 router.get('/enquiries', adminController.getEnquiriesList);
 router.get('/enquiries/:enquiryId', adminController.getEnquiryDetails);
 router.put('/enquiries/:enquiryId/status', adminController.updateEnquiryStatus);
+router.put('/enquiries/:enquiryId/read', adminController.updateEnquiryReadStatus);
+router.put('/enquiries/:enquiryId/read-status', adminController.updateEnquiryReadStatus);
 
 module.exports = router;

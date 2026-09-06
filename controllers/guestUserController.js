@@ -3,7 +3,7 @@ const { pool } = require('../db');
 const guestUserFields = `
   guest_id AS "guestId", email, full_name AS "fullName", phone, company,
   location, inquiry_type AS "inquiryType", project_context AS "projectContext",
-  created_at AS "createdAt", status
+  created_at AS "createdAt", status, is_read AS "isRead"
 `;
 
 const registerGuestUser = async (req, res) => {

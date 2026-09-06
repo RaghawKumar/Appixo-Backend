@@ -47,8 +47,11 @@ const initializeDatabase = async () => {
       inquiry_type VARCHAR(100),
       project_context TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      status VARCHAR(30) NOT NULL DEFAULT 'active'
+      status VARCHAR(30) NOT NULL DEFAULT 'active',
+      is_read BOOLEAN NOT NULL DEFAULT FALSE
     );
+
+    ALTER TABLE guest_users ADD COLUMN IF NOT EXISTS is_read BOOLEAN NOT NULL DEFAULT FALSE;
 
     CREATE TABLE IF NOT EXISTS admin_sessions (
       session_id VARCHAR(100) PRIMARY KEY,
