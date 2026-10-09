@@ -300,6 +300,49 @@
           }
         }
       ]
+    },
+    {
+      "name": "Chatbot API",
+      "item": [
+        {
+          "name": "Chatbot Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/chat",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "chat"]
+            }
+          }
+        },
+        {
+          "name": "Send Chat Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"What services does Appixo offer?\",\n  \"history\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hi\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Hello! I am the Appixo AI assistant. How can I help you today?\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/chat",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "chat"]
+            }
+          }
+        }
+      ]
     }
   ]
 }

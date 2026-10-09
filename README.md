@@ -205,6 +205,48 @@ curl http://localhost:3000/api/guest/all
 curl http://localhost:3000/api/guest/profile/1
 ```
 
+### Chatbot API (Google Gemini AI)
+
+#### 1. Check Chatbot Status
+- **Method**: GET
+- **URL**: `/api/chat`
+- **Response**: Service status, model used, and whether `GEMINI_API_KEY` is configured.
+
+#### 2. Send Message
+- **Method**: POST
+- **URL**: `/api/chat`
+- **Headers**: `Content-Type: application/json`
+- **Body**:
+```json
+{
+  "message": "What services does Appixo offer?",
+  "history": [
+    { "role": "user", "content": "Hi" },
+    { "role": "assistant", "content": "Hello! How can I help you today?" }
+  ]
+}
+```
+- **Response**:
+```json
+{
+  "success": true,
+  "reply": "Appixo Technologies builds high-performance web applications, mobile apps...",
+  "model": "gemini-1.5-flash"
+}
+```
+
+```bash
+# Test Chatbot Status
+curl http://localhost:3000/api/chat
+
+# Test Chatbot Message
+curl -X POST http://localhost:3000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "What services does Appixo offer?"
+  }'
+```
+
 ### Admin API Tests
 ```bash
 # Step 1: Admin Login

@@ -3,10 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const guestUserRoutes = require('./routes/guestUser');
 const adminRoutes = require('./routes/admin');
+const chatRoutes = require('./routes/chat');
 const { initializeDatabase } = require('./db');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/guest', guestUserRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -36,9 +37,17 @@ app.use((err, req, res, next) => {
 // Start server
 initializeDatabase()
   .then(() => {
-    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+    console.log('Database initialized successfully');
   })
   .catch(error => {
-    console.error('Database initialization failed:', error.message);
-    process.exit(1);
+    console.warn('Database initialization warning:', error.message);
+    console.warn('Guest and Admin DB routes will require a valid database connection.');
+  })
+  .finally(() => {
+    const PORT = process.env.PORT || 5001;
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   });
+
